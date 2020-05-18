@@ -30,11 +30,11 @@ export default class App extends React.Component {
           <View style={styles.btn}><Text style={styles.btnText}>Touchable Without Feedback</Text></View>
         </TouchableWithoutFeedback> */}
         {/* Only supported for Android */}
-        <TouchableNativeFeedback
+        {/* <TouchableNativeFeedback
           background={TouchableNativeFeedback.SelectableBackground}
           onPress={this.handlePress}>
           <View style={styles.btn}><Text style={styles.btnText}>TouchableNativeFeedback</Text></View>
-        </TouchableNativeFeedback>
+        </TouchableNativeFeedback> */}
       </View>
     );
   }
