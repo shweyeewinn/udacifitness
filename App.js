@@ -7,15 +7,12 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
-  Slider
 } from 'react-native'
 
 import AddEntry from './components/AddEntry'
 
 export default class App extends React.Component {
-  state = {
-    value: 0
-  }
+
   handlePress = () => {
     alert('Hello')
   }
@@ -24,21 +21,6 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <AddEntry />
-        <Slider
-          minimumValue={-10}
-          maximumValue={10}
-          step={1}
-          value={this.state.value}
-          onValueChange={
-            (value) => this.setState(() => ({
-              value
-            }))
-          }
-        >
-          <Text>
-            Value: {this.state.value}
-          </Text>
-        </Slider>
         {/* <TouchableHighlight style={styles.btn} onPress={this.handlePress} underlayColor='#000'>
           <Text style={styles.btnText}>Touchable Highlight</Text>
         </TouchableHighlight> */}
