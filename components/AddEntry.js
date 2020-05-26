@@ -116,7 +116,7 @@ class AddEntry extends Component {
     if (this.props.alreadyLogged) {
       return (
         <View style={styles.center}>
-          <Ionicons name={Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'}
+          <Ionicons name={Platform.OS === 'ios' ? 'ios-happy' : 'md-happy'}
             size={100}
           />
           <Text>You already logged your information for today.</Text>
