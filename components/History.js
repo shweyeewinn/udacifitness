@@ -8,14 +8,30 @@ import { Calendar, Agenda, calendarTheme } from 'react-native-calendars';
 import { red, blue, white } from '../utils/colors';
 import UdaciFitnessCalendar from 'udacifitness-calendar';
 import DateHeader from './DateHeader';
+import MetricCard from './MetricCard'
+import { AppLoading } from 'expo';
+
+import * as SplashScreen from 'expo-splash-screen';
+
+// Prevent native splash screen from autohiding before App component declaration
+SplashScreen.preventAutoHideAsync()
+  .then(result => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
+  .catch(console.warn); // it's good to explicitly catch and inspect any error
+
+
 
 class History extends Component {
   state = {
     ready: false
   }
 
+
   componentDidMount() {
     const { dispatch } = this.props;
+    // Hides native splash screen after 2s
+    setTimeout(async () => {
+      await SplashScreen.hideAsync();
+    }, 2000);
 
     fetchCalendarResults()
       .then((entries) => dispatch(receiveEntries(entries)))
@@ -41,9 +57,15 @@ class History extends Component {
             </Text>
           </View>
           : <TouchableOpacity
-            onPress={() => console.log('Pressed!')}
+            onPress={() => this.props.navigation.navigate(
+              'EntryDetail',
+              {
+                entryId: key,
+                formattedDate: formattedDate
+              }
+            )}
           >
-            <Text>{JSON.stringify(metrics)}</Text>
+            <MetricCard date={formattedDate} metrics={metrics} />
           </TouchableOpacity>
         }
       </View>
@@ -62,6 +84,15 @@ class History extends Component {
 
   render() {
     const { entries } = this.props;
+    const { ready } = this.state;
+
+    if (ready === false) {
+      return (
+        // <AppLoading />
+        <View><Text>Loading...</Text></View>
+      )
+    }
+
     return (
       <UdaciFitnessCalendar
         items={entries}
@@ -70,6 +101,16 @@ class History extends Component {
       />
     )
   }
+
+  // async _cacheResourcesAsync() {
+  //   const images = [require('./assets/snack-icon.png')];
+
+  //   const cacheImages = images.map(image => {
+  //     return Asset.fromModule(image).downloadAsync();
+  //   });
+  //   return Promise.all(cacheImages);
+  // }
+
 }
 
 const styles = StyleSheet.create({
