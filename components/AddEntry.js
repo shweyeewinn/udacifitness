@@ -9,7 +9,8 @@ import TextButton from './TextButton'
 import { connect } from 'react-redux'
 import { submitEntry, removeEntry } from '../utils/api'
 import { addEntry } from '../actions'
-import { white, purple } from '../utils/colors'
+import { white, purple } from '../utils/colors';
+import { CommonActions } from '@react-navigation/native'
 
 function SubmitBtn({ onPress }) {
   return (
@@ -83,6 +84,7 @@ class AddEntry extends Component {
       eat: 0,
     })
     //Navigate to home
+    this.toHome();
 
     //Save to Database
     submitEntry({ entry, key })
@@ -103,11 +105,21 @@ class AddEntry extends Component {
     ))
 
     //Route to Home
+    this.toHome();
 
     //Update Database
     removeEntry(key)
 
   }
+
+  toHome = () => {
+    this.props.navigation.dispatch(
+      CommonActions.goBack({
+        key: 'AddEntry',
+      }))
+  }
+
+
   render() {
     const metaInfo = getMetricMetaInfo()
     console.log('metaInfo', Object.keys(metaInfo))
